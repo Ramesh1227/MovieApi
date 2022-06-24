@@ -1,0 +1,12 @@
+C:\Source\MovieInformationService\MovieinformationService.Domain\bin\Debug\net6.0\MovieinformationService.Domain.deps.json
+C:\Source\MovieInformationService\MovieinformationService.Domain\bin\Debug\net6.0\MovieinformationService.Domain.dll
+C:\Source\MovieInformationService\MovieinformationService.Domain\bin\Debug\net6.0\MovieinformationService.Domain.pdb
+C:\Source\MovieInformationService\MovieinformationService.Domain\obj\Debug\net6.0\MovieinformationService.Domain.csproj.AssemblyReference.cache
+C:\Source\MovieInformationService\MovieinformationService.Domain\obj\Debug\net6.0\MovieinformationService.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Source\MovieInformationService\MovieinformationService.Domain\obj\Debug\net6.0\MovieinformationService.Domain.AssemblyInfoInputs.cache
+C:\Source\MovieInformationService\MovieinformationService.Domain\obj\Debug\net6.0\MovieinformationService.Domain.AssemblyInfo.cs
+C:\Source\MovieInformationService\MovieinformationService.Domain\obj\Debug\net6.0\MovieinformationService.Domain.csproj.CoreCompileInputs.cache
+C:\Source\MovieInformationService\MovieinformationService.Domain\obj\Debug\net6.0\MovieinformationService.Domain.dll
+C:\Source\MovieInformationService\MovieinformationService.Domain\obj\Debug\net6.0\refint\MovieinformationService.Domain.dll
+C:\Source\MovieInformationService\MovieinformationService.Domain\obj\Debug\net6.0\MovieinformationService.Domain.pdb
+C:\Source\MovieInformationService\MovieinformationService.Domain\obj\Debug\net6.0\ref\MovieinformationService.Domain.dll

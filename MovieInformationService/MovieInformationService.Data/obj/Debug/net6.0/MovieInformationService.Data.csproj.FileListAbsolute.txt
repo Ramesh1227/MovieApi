@@ -1,0 +1,15 @@
+C:\Source\MovieInformationService\MovieInformationService.Data\bin\Debug\net6.0\MovieInformationService.Data.deps.json
+C:\Source\MovieInformationService\MovieInformationService.Data\bin\Debug\net6.0\MovieInformationService.Data.dll
+C:\Source\MovieInformationService\MovieInformationService.Data\bin\Debug\net6.0\MovieInformationService.Data.pdb
+C:\Source\MovieInformationService\MovieInformationService.Data\bin\Debug\net6.0\MovieinformationService.Domain.dll
+C:\Source\MovieInformationService\MovieInformationService.Data\bin\Debug\net6.0\MovieinformationService.Domain.pdb
+C:\Source\MovieInformationService\MovieInformationService.Data\obj\Debug\net6.0\MovieInformationService.Data.csproj.AssemblyReference.cache
+C:\Source\MovieInformationService\MovieInformationService.Data\obj\Debug\net6.0\MovieInformationService.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Source\MovieInformationService\MovieInformationService.Data\obj\Debug\net6.0\MovieInformationService.Data.AssemblyInfoInputs.cache
+C:\Source\MovieInformationService\MovieInformationService.Data\obj\Debug\net6.0\MovieInformationService.Data.AssemblyInfo.cs
+C:\Source\MovieInformationService\MovieInformationService.Data\obj\Debug\net6.0\MovieInformationService.Data.csproj.CoreCompileInputs.cache
+C:\Source\MovieInformationService\MovieInformationService.Data\obj\Debug\net6.0\MovieInformationService.Data.csproj.CopyComplete
+C:\Source\MovieInformationService\MovieInformationService.Data\obj\Debug\net6.0\MovieInformationService.Data.dll
+C:\Source\MovieInformationService\MovieInformationService.Data\obj\Debug\net6.0\refint\MovieInformationService.Data.dll
+C:\Source\MovieInformationService\MovieInformationService.Data\obj\Debug\net6.0\MovieInformationService.Data.pdb
+C:\Source\MovieInformationService\MovieInformationService.Data\obj\Debug\net6.0\ref\MovieInformationService.Data.dll

@@ -14,6 +14,7 @@ Gender varchar(20) NOT NULL
 
 ALTER TABLE dbo.Producers ADD CONSTRAINT PK_Producers PRIMARY KEY CLUSTERED (ProducerId);
 
+
 --******************
 --** Movies ***********
 --******************
