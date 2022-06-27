@@ -10,5 +10,10 @@ namespace MovieinformationService.Domain.Services.Interfaces
     public interface IMovieInfoService
     {
         Task<MovieInformationGetAllResponse> GetAllMovieInformation();
+
+        Task<MovieInformationCreateResponse> CreateMovieInformation(MovieInformationCreateRequest request);
+
+        Task<MovieInformationEditResponse> EditMovieInformation(MovieInformationEditRequest request);
     }
 }
+

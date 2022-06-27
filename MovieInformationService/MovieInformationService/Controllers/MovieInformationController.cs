@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MovieinformationService.Domain;
 using MovieinformationService.Domain.Services.Interfaces;
 using MovieInformationService.Domain;
 
@@ -25,15 +26,21 @@ namespace MovieInformationService.Controllers
         }
 
         // POST api/<ValuesController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("CreateMovieInformation")]
+        public async Task<IActionResult> CreateMovieInformation([FromBody] MovieInformationCreateRequest request)
         {
+            var response = await _movieInfoService.CreateMovieInformation(request);
+
+            return Ok(response);
         }
 
         // PUT api/<ValuesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("EditMovieInformation")]
+        public async Task<IActionResult> EditMovieInformation(MovieInformationEditRequest request)
         {
+            var response = await _movieInfoService.EditMovieInformation(request);
+
+            return Ok(response);
         }
     }
 }

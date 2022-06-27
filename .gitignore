@@ -3,3 +3,11 @@
 ################################################################################
 
 /.vs
+/MovieInformationService/bin
+/MovieInformationService/obj
+/MovieInformationService/MovieInformationService/bin
+/MovieInformationService/MovieInformationService/obj
+/MovieInformationService/MovieInformationService.Data/bin
+/MovieInformationService/MovieInformationService.Data/obj
+/MovieInformationService/MovieInformationService.Domain/bin
+/MovieInformationService/MovieInformationService.Domain/obj

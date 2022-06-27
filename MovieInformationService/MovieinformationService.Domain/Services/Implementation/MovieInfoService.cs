@@ -21,7 +21,24 @@ namespace MovieinformationService.Domain.Services.Implementation
         public async Task<MovieInformationGetAllResponse> GetAllMovieInformation()
         {
             var result = await _movieInfoData.GetAllMovieInformationData();
+            var MovieInformationGetAllResponse = new MovieInformationGetAllResponse()
+            {
+                GetAllMovieInformations = result.GetAllMovieInformations,
+            };
             return result;
+        }
+
+        public async Task<MovieInformationCreateResponse> CreateMovieInformation(MovieInformationCreateRequest request)
+        {
+            var response = await _movieInfoData.CreateMovieInformationData(request);
+
+            return response;
+        }
+
+        public async Task<MovieInformationEditResponse> EditMovieInformation(MovieInformationEditRequest request)
+        {
+            var response = await _movieInfoData.EditMovieInformationData(request);
+            return response;
         }
     }
 }

@@ -10,5 +10,9 @@ namespace MovieinformationService.Domain.Data
     public interface IMovieInfoData
     {
        Task<MovieInformationGetAllResponse> GetAllMovieInformationData();
+
+        Task<MovieInformationCreateResponse> CreateMovieInformationData( MovieInformationCreateRequest request);
+
+        Task<MovieInformationEditResponse> EditMovieInformationData(MovieInformationEditRequest request);
     }
 }

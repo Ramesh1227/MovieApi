@@ -4,26 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MovieInformationService.Domain
+namespace MovieinformationService.Domain
 {
-    public class MovieInformationCreateRequest
+    public  class MovieInformationEditRequest
     {
         public int MovieId { get; set; }
         public string MovieName { get; set; }
 
+        public int ProducerId { get; set; }
         public string Plot { get; set; }
-
         public string DateOfRelease { get; set; }
 
-        public int ProducerId { get; set; }
         public string ProducerName { get; set; }
 
-        public List<Actor> Actors { get; set; }
+        public List<Actors> Actors { get; set; }
     }
 
-    public class Actor
+    public class Actors
     {
-        public string ActorsId { get; set; }
+        public int ActorsId { get; set; }
         public string ActorsName { get; set; }
     }
 }
