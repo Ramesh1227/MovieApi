@@ -1,0 +1,447 @@
+
+CREATE PROCEDURE [dbo].[CreateMovies]     (@M_Name VARCHAR(500),
+                                          @Plot	NVARCHAR(MAX),
+                                          @DateOfRelease DATE,
+										  @P_Id	INT,
+                                          @Actor_List VARCHAR(MAX))
+AS
+    SET NOCOUNT ON
+
+  BEGIN
+
+  DECLARE @MovieId INT
+  -- Delete from Movie If already exits 
+  DELETE FROM [dbo].[Test_M] WHERE upper(M_Name) = upper(@M_Name)
+   AND P_Id =  @P_Id
+   AND upper(Plot) =  upper(@Plot)
+   AND DateOfRelease = @DateOfRelease
+
+  -- Insert into Movie
+  INSERT INTO [dbo].[Test_M] 
+  (M_Name,
+   P_Id,
+   Plot,
+   DateOfRelease,
+   CreatedTime)
+   VALUES(@M_Name,
+   @P_Id,
+   @Plot,
+   @DateOfRelease,
+   Getutcdate())
+
+   SET @MovieId=Scope_identity()
+
+    -- Insert into [Test_A_Committed_M ]
+	INSERT INTO [dbo].[Test_A_Committed_M ]  
+	(A_Id,M_Id)
+	(SELECT
+    value actor_Id,@MovieId
+	FROM 
+    STRING_SPLIT(@Actor_List, ','))
+
+  END
+GO
+
+
+-----
+
+
+CREATE PROCEDURE [dbo].[CreateMovies]     (@M_Name VARCHAR(500),
+                                          @Plot	NVARCHAR(MAX),
+                                          @DateOfRelease DATE,
+										  @P_Id	INT,
+                                          @Actor_List VARCHAR(MAX))
+AS
+    SET NOCOUNT ON
+
+  BEGIN
+
+  DECLARE @MovieId INT
+  -- Delete from Movie If already exits 
+  DELETE FROM [dbo].[Test_M] WHERE M_Name = @M_Name 
+   AND P_Id =  @P_Id
+   AND Plot =  @Plot
+   AND DateOfRelease = @DateOfRelease
+
+  -- Insert into Movie
+  INSERT INTO [dbo].[Test_M] 
+  (M_Name,
+   P_Id,
+   Plot,
+   DateOfRelease,
+   CreatedTime)
+   VALUES(@M_Name,
+   @P_Id,
+   @Plot,
+   @DateOfRelease,
+   Getutcdate())
+
+   SET @MovieId=Scope_identity()
+
+    -- Insert into [Test_A_Committed_M ]
+	INSERT INTO [dbo].[Test_A_Committed_M ]  
+	(A_Id,M_Id)
+	(SELECT
+    value actor_Id,@MovieId
+	FROM 
+    STRING_SPLIT(@Actor_List, ','))
+
+  END
+GO
+
+
+-----
+
+DROP PROCEDURE [dbo].[CreateMovies] 
+
+DROP TABLE dbo.Test_P
+
+DROP TABLE dbo.Test_M
+
+DROP TABLE dbo.Test_A
+
+DROP TABLE Test_A_Committed_M
+
+CREATE TABLE dbo.Test_P
+(
+P_Id int IDENTITY(1,1) NOT NULL,
+P_Name varchar(500) NOT NULL,
+Bio nvarchar(max) NULL,
+Company varchar(500) NOT NULL,
+DateOfBirth date NOT NULL,
+Gender varchar(500) NOT NULL
+);
+
+ALTER TABLE dbo.Test_P ADD CONSTRAINT PK_P_Test PRIMARY KEY CLUSTERED (P_Id);
+
+CREATE TABLE dbo.Test_M
+(
+M_Id int IDENTITY(1,1) NOT NULL,
+M_Name varchar(500) NOT NULL,
+P_Id int NOT NULL,
+Plot nvarchar(max) NOT NULL,
+DateOfRelease date NOT NULL,
+CreatedTime Datetimeoffset(3) NOT NULL
+);
+
+ALTER TABLE dbo.Test_M ADD CONSTRAINT PK_M_Test PRIMARY KEY CLUSTERED (M_Id);
+
+ALTER TABLE dbo.Test_M ADD FOREIGN KEY (P_Id) REFERENCES dbo.Test_P(P_Id);
+
+CREATE TABLE dbo.Test_A
+(
+A_Id int IDENTITY(1,1) NOT NULL,
+A_Name varchar(500) NOT NULL,
+Bio nvarchar(max) NULL,
+DateOfBirth date NOT NULL,
+Gender varchar(500) NOT NULL
+);
+
+ALTER TABLE dbo.Test_A ADD CONSTRAINT PK_A_Test PRIMARY KEY CLUSTERED (A_Id);
+
+CREATE TABLE dbo.Test_A_Committed_M
+(
+A_Committed_Id int IDENTITY(1,1) NOT NULL,
+A_id int NOT NULL,
+M_id int NULL
+);
+
+ALTER TABLE dbo.Test_A_Committed_M ADD CONSTRAINT PK_Test_A_Committed_M PRIMARY KEY CLUSTERED (A_Committed_Id);
+
+ALTER TABLE dbo.Test_A_Committed_M ADD FOREIGN KEY (M_Id) REFERENCES dbo.Test_M(M_Id);
+
+ALTER TABLE dbo.Test_A_Committed_M ADD FOREIGN KEY (A_Id) REFERENCES dbo.Test_A(A_Id);
+
+insert into dbo.Test_P (P_Name ,Bio ,Company ,DateOfBirth ,Gender) values ('ABC','Producer1','ABC Company','1989-12-31','Male')
+
+insert into dbo.Test_P (P_Name ,Bio ,Company ,DateOfBirth ,Gender) values ('JASA','Producer2','JASA Company','1990-02-01','Female')
+
+insert into dbo.Test_P (P_Name ,Bio ,Company ,DateOfBirth ,Gender) values ('RED','Producer3','RED Company','1980-12-31','Male')
+
+insert into dbo.Test_P (P_Name ,Bio ,Company ,DateOfBirth ,Gender) values ('DSAD','Producer4','DSAD Company','1980-12-31','Male')
+
+select * from dbo.Test_P
+
+insert into dbo.Test_M (M_Name ,P_Id ,Plot ,DateOfRelease ,CreatedTime) values ('MOVIE1','2','COMMERCIAL','2022-12-31','2022-04-12')
+insert into dbo.Test_M (M_Name ,P_Id ,Plot ,DateOfRelease ,CreatedTime) values ('MOVIE2','2','COMMERCIAL COMBINED COMEDY','2023-03-31','2022-04-12')
+insert into dbo.Test_M (M_Name ,P_Id ,Plot ,DateOfRelease ,CreatedTime) values ('MOVIE3','1','HORROR','2022-08-31','2021-04-12')
+insert into dbo.Test_M (M_Name ,P_Id ,Plot ,DateOfRelease ,CreatedTime) values ('MOVIE4','4','ROMANCE','2022-07-31','2021-12-12')
+
+SELECT * FROM dbo.Test_M
+
+insert into dbo.Test_A (A_Name ,Bio ,DateOfBirth ,Gender) values ('A1','ALL','1999-12-31','FEMALE')
+insert into dbo.Test_A (A_Name ,Bio ,DateOfBirth ,Gender) values ('A2','ALL','1997-12-31','MALE')
+insert into dbo.Test_A (A_Name ,Bio ,DateOfBirth ,Gender) values ('A3','ALL','1991-12-31','FEMALE')
+insert into dbo.Test_A (A_Name ,Bio ,DateOfBirth ,Gender) values ('A4','ALL','1989-12-31','MALE')
+
+SELECT * FROM dbo.Test_A
+
+SELECT * FROM DBO.Test_A_Committed_M 
+
+TRUNCATE TABLE DBO.Test_A_Committed_M 
+
+exec [dbo].[CreateMovies] @M_Name='MOVIE6', @Plot='ROMANCE',@DateOfRelease='2022-08-01',@P_Id=6,@Actor_List='1,3'
+
+exec [dbo].[CreateMovies] @M_Name='MOVIE7', @Plot='COMEDY',@DateOfRelease='2022-10-01',@P_Id=2,@Actor_List='1,4'
+
+-----
+
+
+CREATE PROCEDURE [dbo].[CreatePRO]		 (@P_Name VARCHAR(500),
+                                          @Bio	VARCHAR(MAX),
+                                          @Company VARCHAR(MAX),
+										  @DateOfBirth DATE,
+                                          @Gender VARCHAR(50))
+AS
+    SET NOCOUNT ON
+
+  BEGIN
+
+  -- Delete from Producer If already exits 
+  DELETE FROM [dbo].[Test_P] WHERE upper(P_Name) = upper(@P_Name)
+   AND upper(Bio) =  upper(@Bio)
+   AND upper(Company) =  upper(@Company)
+   AND DateOfBirth = @DateOfBirth
+   AND upper(Gender) = upper(@Gender)
+
+  -- Insert into Producer
+  INSERT INTO [dbo].[Test_P] 
+  (P_Name,
+   Bio,
+   Company,
+   DateOfBirth,
+   Gender)
+   VALUES(@P_Name,
+   @Bio,
+   @Company,
+   @DateOfBirth,
+   @Gender)
+
+  END
+GO
+
+drop procedure dbo.CreatePRO
+
+select * from dbo.Test_P
+
+exec [dbo].[CreatePRO] @P_Name='KDSD', @Bio='Producer5',@Company='KDSD COMPANY',@DateOfBirth='1998-12-03',@Gender='FEMALE'
+
+------
+
+select * from dbo.Test_A
+
+CREATE PROCEDURE [dbo].[CreateACT]		 (@A_Name VARCHAR(500),
+                                          @Bio	VARCHAR(MAX),
+										  @DateOfBirth DATE,
+                                          @Gender VARCHAR(50))
+AS
+    SET NOCOUNT ON
+
+  BEGIN
+
+  -- Delete from Actor If already exits 
+  DELETE FROM [dbo].[Test_A] WHERE upper(A_Name) = upper(@A_Name)
+   AND upper(Bio) =  upper(@Bio)
+   AND DateOfBirth = @DateOfBirth
+   AND upper(Gender) = upper(@Gender)
+
+  -- Insert into Actor
+  INSERT INTO [dbo].[Test_A] 
+  (A_Name,
+   Bio,
+   DateOfBirth,
+   Gender)
+   VALUES(@A_Name,
+   @Bio,
+   @DateOfBirth,
+   @Gender)
+
+  END
+GO
+
+drop procedure dbo.CreateACT
+
+select * from dbo.Test_A
+
+exec [dbo].[CreateACT] @A_Name='A10', @Bio='ALL',@DateOfBirth='1998-12-03',@Gender='FEMALE'
+
+
+
+DROP PROCEDURE [dbo].[CreateMovies] 
+
+DROP PROCEDURE [dbo].[CreatePRO] 
+
+DROP PROCEDURE [dbo].[CreateACT] 
+
+DROP TABLE Test_A_Committed_M
+
+DROP TABLE dbo.Test_A
+
+DROP TABLE dbo.Test_M
+
+DROP TABLE dbo.Test_P
+
+CREATE TABLE dbo.Test_P
+(
+P_Id int IDENTITY(1,1) NOT NULL,
+P_Name varchar(500) NOT NULL,
+Bio nvarchar(max) NULL,
+Company varchar(500) NOT NULL,
+DateOfBirth date NOT NULL,
+Gender varchar(500) NOT NULL
+);
+
+ALTER TABLE dbo.Test_P ADD CONSTRAINT PK_P_Test PRIMARY KEY CLUSTERED (P_Id);
+
+CREATE TABLE dbo.Test_M
+(
+M_Id int IDENTITY(1,1) NOT NULL,
+M_Name varchar(500) NOT NULL,
+P_Id int NOT NULL,
+Plot nvarchar(max) NOT NULL,
+DateOfRelease date NOT NULL,
+CreatedTime Datetimeoffset(3) NOT NULL
+);
+
+ALTER TABLE dbo.Test_M ADD CONSTRAINT PK_M_Test PRIMARY KEY CLUSTERED (M_Id);
+
+ALTER TABLE dbo.Test_M ADD FOREIGN KEY (P_Id) REFERENCES dbo.Test_P(P_Id);
+
+CREATE TABLE dbo.Test_A
+(
+A_Id int IDENTITY(1,1) NOT NULL,
+A_Name varchar(500) NOT NULL,
+Bio nvarchar(max) NULL,
+DateOfBirth date NOT NULL,
+Gender varchar(500) NOT NULL
+);
+
+ALTER TABLE dbo.Test_A ADD CONSTRAINT PK_A_Test PRIMARY KEY CLUSTERED (A_Id);
+
+CREATE TABLE dbo.Test_A_Committed_M
+(
+A_Committed_Id int IDENTITY(1,1) NOT NULL,
+A_id int NOT NULL,
+M_id int NULL
+);
+
+ALTER TABLE dbo.Test_A_Committed_M ADD CONSTRAINT PK_Test_A_Committed_M PRIMARY KEY CLUSTERED (A_Committed_Id);
+
+ALTER TABLE dbo.Test_A_Committed_M ADD FOREIGN KEY (M_Id) REFERENCES dbo.Test_M(M_Id);
+
+ALTER TABLE dbo.Test_A_Committed_M ADD FOREIGN KEY (A_Id) REFERENCES dbo.Test_A(A_Id);
+
+insert into dbo.Test_P (P_Name ,Bio ,Company ,DateOfBirth ,Gender) values ('ABC','Producer1','ABC Company','1989-12-31','Male')
+
+insert into dbo.Test_P (P_Name ,Bio ,Company ,DateOfBirth ,Gender) values ('JASA','Producer2','JASA Company','1990-02-01','Female')
+
+insert into dbo.Test_P (P_Name ,Bio ,Company ,DateOfBirth ,Gender) values ('RED','Producer3','RED Company','1980-12-31','Male')
+
+insert into dbo.Test_P (P_Name ,Bio ,Company ,DateOfBirth ,Gender) values ('DSAD','Producer4','DSAD Company','1980-12-31','Male')
+
+select * from dbo.Test_P
+
+insert into dbo.Test_M (M_Name ,P_Id ,Plot ,DateOfRelease ,CreatedTime) values ('MOVIE1','2','COMMERCIAL','2022-12-31','2022-04-12')
+insert into dbo.Test_M (M_Name ,P_Id ,Plot ,DateOfRelease ,CreatedTime) values ('MOVIE2','2','COMMERCIAL COMBINED COMEDY','2023-03-31','2022-04-12')
+insert into dbo.Test_M (M_Name ,P_Id ,Plot ,DateOfRelease ,CreatedTime) values ('MOVIE3','1','HORROR','2022-08-31','2021-04-12')
+insert into dbo.Test_M (M_Name ,P_Id ,Plot ,DateOfRelease ,CreatedTime) values ('MOVIE4','4','ROMANCE','2022-07-31','2021-12-12')
+
+SELECT * FROM dbo.Test_M
+
+insert into dbo.Test_A (A_Name ,Bio ,DateOfBirth ,Gender) values ('A1','ALL','1999-12-31','FEMALE')
+insert into dbo.Test_A (A_Name ,Bio ,DateOfBirth ,Gender) values ('A2','ALL','1997-12-31','MALE')
+insert into dbo.Test_A (A_Name ,Bio ,DateOfBirth ,Gender) values ('A3','ALL','1991-12-31','FEMALE')
+insert into dbo.Test_A (A_Name ,Bio ,DateOfBirth ,Gender) values ('A4','ALL','1989-12-31','MALE')
+
+SELECT * FROM dbo.Test_A
+
+SELECT * FROM DBO.Test_A_Committed_M 
+
+TRUNCATE TABLE DBO.Test_A_Committed_M 
+
+exec [dbo].[CreateMovies] @M_Name='MOVIE6', @Plot='ROMANCE',@DateOfRelease='2022-08-01',@P_Id=6,@Actor_List='1,3'
+
+exec [dbo].[CreateMovies] @M_Name='MOVIE7', @Plot='COMEDY',@DateOfRelease='2022-10-01',@P_Id=2,@Actor_List='1,4'
+
+-----
+
+
+CREATE PROCEDURE [dbo].[CreatePRO]		 (@P_Name VARCHAR(500),
+                                          @Bio	VARCHAR(MAX),
+                                          @Company VARCHAR(MAX),
+										  @DateOfBirth DATE,
+                                          @Gender VARCHAR(50))
+AS
+    SET NOCOUNT ON
+
+  BEGIN
+
+  -- Delete from Producer If already exits 
+  DELETE FROM [dbo].[Test_P] WHERE upper(P_Name) = upper(@P_Name)
+   AND upper(Bio) =  upper(@Bio)
+   AND upper(Company) =  upper(@Company)
+   AND DateOfBirth = @DateOfBirth
+   AND upper(Gender) = upper(@Gender)
+
+  -- Insert into Producer
+  INSERT INTO [dbo].[Test_P] 
+  (P_Name,
+   Bio,
+   Company,
+   DateOfBirth,
+   Gender)
+   VALUES(@P_Name,
+   @Bio,
+   @Company,
+   @DateOfBirth,
+   @Gender)
+
+  END
+GO
+
+drop procedure dbo.CreatePRO
+
+select * from dbo.Test_P
+
+exec [dbo].[CreatePRO] @P_Name='KDSD', @Bio='Producer5',@Company='KDSD COMPANY',@DateOfBirth='1998-12-03',@Gender='FEMALE'
+
+------
+
+select * from dbo.Test_A
+
+CREATE PROCEDURE [dbo].[CreateACT]		 (@A_Name VARCHAR(500),
+                                          @Bio	VARCHAR(MAX),
+										  @DateOfBirth DATE,
+                                          @Gender VARCHAR(50))
+AS
+    SET NOCOUNT ON
+
+  BEGIN
+
+  -- Delete from Actor If already exits 
+  DELETE FROM [dbo].[Test_A] WHERE upper(A_Name) = upper(@A_Name)
+   AND upper(Bio) =  upper(@Bio)
+   AND DateOfBirth = @DateOfBirth
+   AND upper(Gender) = upper(@Gender)
+
+  -- Insert into Actor
+  INSERT INTO [dbo].[Test_A] 
+  (A_Name,
+   Bio,
+   DateOfBirth,
+   Gender)
+   VALUES(@A_Name,
+   @Bio,
+   @DateOfBirth,
+   @Gender)
+
+  END
+GO
+
+drop procedure dbo.CreateACT
+
+select * from dbo.Test_A
+
+exec [dbo].[CreateACT] @A_Name='A10', @Bio='ALL',@DateOfBirth='1998-12-03',@Gender='FEMALE'
+
+------------
